@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Level</title>
+</head>
+<body>
+    <h1>How do you want to proceed with learning about "{{ topic }}"?</h1>
+    
+    <form action="/choose_level" method="post">
+       
+        <input type="hidden" name="topic" value="{{ topic }}">
+        
+        <label for="level">Select your level:</label>
+        <select name="level" id="level">
+            <option value="1">Level 1 - Beginner</option>
+            <option value="2">Level 2 - Intermediate</option>
+            <option value="3">Level 3 - Advanced</option>
+            <option value="4">Level 4 - Expert</option>
+            <option value="5">Level 5 - Master</option>
+        </select>
+        <button type="submit">Continue</button>
+    </form>
+</body>
+</html>
