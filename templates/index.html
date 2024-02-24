@@ -4,6 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Topic Explorer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #content {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        #summary {
+            text-align: justify;
+        }
+        a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div id="content">
@@ -24,7 +62,7 @@
                     if(data.url) {
                         const readMoreLink = document.getElementById('readMore');
                         readMoreLink.href = data.url;
-                        readMoreLink.style.display = 'block';
+                        readMoreLink.style.display = 'inline-block';
                         readMoreLink.textContent = 'Read More';
                     } else {
                         document.getElementById('readMore').style.display = 'none';
@@ -32,7 +70,7 @@
                     if(data.video_url) {
                         const watchTopicLink = document.getElementById('watchTopic');
                         watchTopicLink.href = data.video_url;
-                        watchTopicLink.style.display = 'block';
+                        watchTopicLink.style.display = 'inline-block';
                         watchTopicLink.textContent = 'Watch the Topic';
                     } else {
                         document.getElementById('watchTopic').style.display = 'none';
