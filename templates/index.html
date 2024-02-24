@@ -49,37 +49,45 @@
         <p id="summary"></p>
         <a id="readMore" href="" target="_blank" style="display:none;">Read More</a>
         <a id="watchTopic" href="" target="_blank" style="display:none;">Watch the Topic</a>
-        <button onclick="getNewTopic()">Get New Topic</button>
+      <button id="getNewTopicButton" onclick="getNewTopic()">Get New Topic</button>
+
     </div>
 
-    <script>
-        function getNewTopic() {
-            fetch('/get_topic')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('topic').textContent = data.topic;
-                    document.getElementById('summary').textContent = data.summary;
-                    if(data.url) {
-                        const readMoreLink = document.getElementById('readMore');
-                        readMoreLink.href = data.url;
-                        readMoreLink.style.display = 'inline-block';
-                        readMoreLink.textContent = 'Read More';
-                    } else {
-                        document.getElementById('readMore').style.display = 'none';
-                    }
-                    if(data.video_url) {
-                        const watchTopicLink = document.getElementById('watchTopic');
-                        watchTopicLink.href = data.video_url;
-                        watchTopicLink.style.display = 'inline-block';
-                        watchTopicLink.textContent = 'Watch the Topic';
-                    } else {
-                        document.getElementById('watchTopic').style.display = 'none';
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
+  <script>
+      function getNewTopic() {
+          document.getElementById('getNewTopicButton').style.display = 'none'; // Hide the button when loading new content
 
-        getNewTopic();  
-    </script>
+          fetch('/get_topic')
+              .then(response => response.json())
+              .then(data => {
+                  document.getElementById('topic').textContent = data.topic;
+                  document.getElementById('summary').textContent = data.summary;
+                  if(data.url) {
+                      const readMoreLink = document.getElementById('readMore');
+                      readMoreLink.href = data.url;
+                      readMoreLink.style.display = 'inline-block';
+                      readMoreLink.textContent = 'Read More';
+                  } else {
+                      document.getElementById('readMore').style.display = 'none';
+                  }
+                  if(data.video_url) {
+                      const watchTopicLink = document.getElementById('watchTopic');
+                      watchTopicLink.href = data.video_url;
+                      watchTopicLink.style.display = 'inline-block';
+                      watchTopicLink.textContent = 'Watch the Topic';
+                  } else {
+                      document.getElementById('watchTopic').style.display = 'none';
+                  }
+                  document.getElementById('getNewTopicButton').style.display = 'inline-block'; // Show the button again once content is loaded
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  document.getElementById('getNewTopicButton').style.display = 'inline-block'; // Ensure button is visible if an error occurs
+              });
+      }
+
+      window.onload = getNewTopic; 
+  </script>
+
 </body>
 </html>
