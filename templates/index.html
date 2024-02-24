@@ -3,45 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Topic Explorer</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        #content {
-            margin-top: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-        }
-        #summary {
-            text-align: justify;
-        }
-        a {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #28a745;
-            color: white;
-        }
-    </style>
+  <title>Random Topic Explorer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+      body {
+          font-family: 'Nunito', sans-serif;
+          margin: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: #f5f5f5;
+      }
+      #content {
+          margin-top: 20px;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+          width: 80%;
+          max-width: 600px;
+          text-align: center;
+          background-color: white;
+          
+      }
+      
+      #summary {
+          text-align: justify;
+      }
+      a, button {
+          font-weight: 700;
+          margin: 10px;
+          padding: 10px 15px;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+      a {
+          background-color: #007bff;
+          color: white;
+          text-decoration: none;
+      }
+      a:hover {
+          background-color: #0056b3;
+      }
+      button {
+          border: none;
+          background-color: #28a745;
+          color: white;
+      }
+      button:hover {
+          background-color: #1e7e34;
+      }
+  </style>
 </head>
 <body>
     <div id="content">
