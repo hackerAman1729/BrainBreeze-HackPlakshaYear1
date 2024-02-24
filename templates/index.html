@@ -55,6 +55,30 @@
             background-color: #2196f3;
             color: white;
         }
+
+        .loader {
+            display: none; 
+            margin: 20px auto;
+            width: 85px;
+            height: 50px;
+            --g1: conic-gradient(from 90deg at left 3px top 3px, #000 90deg, #000 0);
+            --g2: conic-gradient(from -90deg at bottom 3px right 3px, #000 90deg, #000 0);
+            background: var(--g1), var(--g1), var(--g1), var(--g2), var(--g2), var(--g2);
+            background-position: left, center, right;
+            background-repeat: no-repeat;
+            animation: l10 1s infinite alternate;
+        }
+
+        @keyframes l10 {
+          0%,
+          2%   {background-size:25px 50% ,25px 50% ,25px 50%}
+          20%  {background-size:25px 25% ,25px 50% ,25px 50%}
+          40%  {background-size:25px 100%,25px 25% ,25px 50%}
+          60%  {background-size:25px 50% ,25px 100%,25px 25%}
+          80%  {background-size:25px 50% ,25px 50% ,25px 100%}
+          98%,
+          100% {background-size:25px 50% ,25px 50% ,25px 50%}
+        }
     </style>
 </head>
 <body>
@@ -65,12 +89,14 @@
         <a id="watchTopic" href="" target="_blank" style="display:none;">Watch video about it</a>
         <button id="getNewTopicButton" onclick="getNewTopic()">Get a New Topic</button>
     </div>
+    <div class="loader"></div>
 
     <script>
         function getNewTopic() {
             document.getElementById('getNewTopicButton').style.display = 'none';
             document.getElementById('readMore').style.display = 'none';
             document.getElementById('watchTopic').style.display = 'none';
+            document.querySelector('.loader').style.display = 'block';
 
             document.getElementById('topic').textContent = 'Hang on. Boredom Killer Loading…';
             document.getElementById('summary').textContent = ''; 
@@ -78,6 +104,7 @@
             fetch('/get_topic')
                 .then(response => response.json())
                 .then(data => {
+                    document.querySelector('.loader').style.display = 'none';
                     document.getElementById('topic').textContent = data.topic;
                     document.getElementById('summary').textContent = data.summary;
 
