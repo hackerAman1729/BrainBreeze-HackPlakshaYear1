@@ -54,39 +54,47 @@
     </div>
 
   <script>
-      function getNewTopic() {
-          document.getElementById('getNewTopicButton').style.display = 'none'; // Hide the button when loading new content
+    function getNewTopic() {
+        // Hide all buttons initially
+        document.getElementById('getNewTopicButton').style.display = 'none';
+        document.getElementById('readMore').style.display = 'none';
+        document.getElementById('watchTopic').style.display = 'none';
 
-          fetch('/get_topic')
-              .then(response => response.json())
-              .then(data => {
-                  document.getElementById('topic').textContent = data.topic;
-                  document.getElementById('summary').textContent = data.summary;
-                  if(data.url) {
-                      const readMoreLink = document.getElementById('readMore');
-                      readMoreLink.href = data.url;
-                      readMoreLink.style.display = 'inline-block';
-                      readMoreLink.textContent = 'Read More';
-                  } else {
-                      document.getElementById('readMore').style.display = 'none';
-                  }
-                  if(data.video_url) {
-                      const watchTopicLink = document.getElementById('watchTopic');
-                      watchTopicLink.href = data.video_url;
-                      watchTopicLink.style.display = 'inline-block';
-                      watchTopicLink.textContent = 'Watch the Topic';
-                  } else {
-                      document.getElementById('watchTopic').style.display = 'none';
-                  }
-                  document.getElementById('getNewTopicButton').style.display = 'inline-block'; // Show the button again once content is loaded
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  document.getElementById('getNewTopicButton').style.display = 'inline-block'; // Ensure button is visible if an error occurs
-              });
-      }
+        // Reset the topic and summary to show loading message
+        document.getElementById('topic').textContent = 'Hang on. Boredom Killer Loading…';
+        document.getElementById('summary').textContent = ''; // Clear previous summary
 
-      window.onload = getNewTopic; 
+        fetch('/get_topic')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('topic').textContent = data.topic;
+                document.getElementById('summary').textContent = data.summary;
+
+                // Conditionally display buttons based on the availability of URLs
+                if(data.url) {
+                    const readMoreLink = document.getElementById('readMore');
+                    readMoreLink.href = data.url;
+                    readMoreLink.style.display = 'inline-block';
+                }
+                if(data.video_url) {
+                    const watchTopicLink = document.getElementById('watchTopic');
+                    watchTopicLink.href = data.video_url;
+                    watchTopicLink.style.display = 'inline-block';
+                }
+
+                // Show the "Get New Topic" button again
+                document.getElementById('getNewTopicButton').style.display = 'inline-block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Show the "Get New Topic" button in case of an error
+                document.getElementById('getNewTopicButton').style.display = 'inline-block';
+            });
+    }
+
+    window.onload = getNewTopic; // Load a topic when the page loads
+
+
   </script>
 
 </body>
