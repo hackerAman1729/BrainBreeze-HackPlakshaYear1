@@ -13,7 +13,7 @@ def generate_random_topic():
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a knowledgeable assistant."},
-            {"role": "user", "content": "Suggest a random interesting topic. random topic like from rocket propulsion, to nylon thread, to history topic, to some historic sport event, to lithium mining to essential proteins etc etc. The topics should not be limited to that as I just mentioned them as an example like how niche the topics can be. The most likely topics are already done so go niche. Just give the topic and say nothing else. "}
+            {"role": "user", "content": "Suggest a random interesting topic. random topic like from rocket propulsion, to nylon thread, to history topic, to some historic sport event, to radio technology, to harmoic motion to lithium mining to essential proteins etc etc. The topics should not be limited to that as I just mentioned them as an example like how niche the topics can be. The most likely topics are already done so go niche. Just give the topic and say nothing else. "}
         ]
     )
     topic = response.choices[0].message.content.strip()
