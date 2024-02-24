@@ -19,7 +19,7 @@ def generate_random_topic():
           "role":
           "user",
           "content":
-          "Suggest a random interesting topic. random topic like from rocket propulsion, to nylon thread, to history topic, to some historic sport event, to radio technology, to harmoic motion to lithium mining to essential proteins etc etc. The topics should not be limited to that as I just mentioned them as an example like how niche the topics can be, and the topics can be technical,financial,scientific,biotechnological also. The most likely topics are already done so go niche. Just give the topic and say nothing else. "
+          "Suggest a random interesting topic. random topic like from rocket propulsion, to nylon thread, to history topic, to some historic sport event, to radio technology, to harmoic motion to lithium mining to essential proteins etc etc. The topics should not be limited to that as I just mentioned them as an example like how niche the topics can be, and the topics can be technical,financial,scientific,biotechnological, literary,historic world leaders also. The most likely topics are already done so go niche. Just give the topic and say nothing else. "
       }])
   topic = response.choices[0].message.content.strip()
   return topic
