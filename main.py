@@ -59,7 +59,7 @@ def summarize_content(content):
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a concise assistant."},
-            {"role": "user", "content": f"Summarize this in 150 words, make sure that you keep it concise yet interesting, factfully correct,  And if there are some articles so don't say things like in this article the writer is saying this and that . just talk about what is being said, the main theme.: {content}"}
+            {"role": "user", "content": f"Summarize this in 100 words, make sure that you keep it concise yet interesting, factfully correct,  And if there are some articles so don't say things like in this article the writer is saying this and that . just talk about what is being said, the main theme.: {content}"}
         ]
     )
     summary = response.choices[0].message.content.strip()

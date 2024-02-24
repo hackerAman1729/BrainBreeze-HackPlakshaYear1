@@ -55,14 +55,12 @@
 
   <script>
     function getNewTopic() {
-        // Hide all buttons initially
         document.getElementById('getNewTopicButton').style.display = 'none';
         document.getElementById('readMore').style.display = 'none';
         document.getElementById('watchTopic').style.display = 'none';
 
-        // Reset the topic and summary to show loading message
         document.getElementById('topic').textContent = 'Hang on. Boredom Killer Loading…';
-        document.getElementById('summary').textContent = ''; // Clear previous summary
+        document.getElementById('summary').textContent = ''; 
 
         fetch('/get_topic')
             .then(response => response.json())
@@ -70,7 +68,7 @@
                 document.getElementById('topic').textContent = data.topic;
                 document.getElementById('summary').textContent = data.summary;
 
-                // Conditionally display buttons based on the availability of URLs
+                
                 if(data.url) {
                     const readMoreLink = document.getElementById('readMore');
                     readMoreLink.href = data.url;
@@ -82,17 +80,15 @@
                     watchTopicLink.style.display = 'inline-block';
                 }
 
-                // Show the "Get New Topic" button again
                 document.getElementById('getNewTopicButton').style.display = 'inline-block';
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Show the "Get New Topic" button in case of an error
                 document.getElementById('getNewTopicButton').style.display = 'inline-block';
             });
     }
 
-    window.onload = getNewTopic; // Load a topic when the page loads
+    window.onload = getNewTopic; 
 
 
   </script>
