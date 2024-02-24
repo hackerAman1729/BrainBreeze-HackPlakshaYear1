@@ -3,108 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random Topic Explorer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-      body {
-          font-family: 'Nunito', sans-serif;
-          margin: 20px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          background-color: #f5f5f5;
-      }
-      #content {
-          margin-top: 20px;
-          padding: 20px;
-          border: 1px solid #ccc;
-          border-radius: 10px;
-          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-          width: 80%;
-          max-width: 600px;
-          text-align: center;
-          background-color: white;
-          
-      }
-      
-      #summary {
-          text-align: justify;
-      }
-      a, button {
-          font-weight: 700;
-          margin: 10px;
-          padding: 10px 15px;
-          border-radius: 5px;
-          cursor: pointer;
-          transition: background-color 0.3s ease;
-      }
-      a {
-          background-color: #007bff;
-          color: white;
-          text-decoration: none;
-      }
-      a:hover {
-          background-color: #0056b3;
-      }
-      button {
-          border: none;
-          background-color: #28a745;
-          color: white;
-      }
-      button:hover {
-          background-color: #1e7e34;
-      }
-  </style>
+    <title>Random Topic Explorer</title>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            color: #333;
+        }
+        #content {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h2 {
+            margin: 0 0 20px;
+        }
+        p {
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        a, button {
+            font-weight: 700;
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        a {
+            background-color: #4caf50;
+            color: white;
+            text-decoration: none;
+        }
+        a:hover, button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        button {
+            background-color: #2196f3;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div id="content">
         <h2 id="topic">Hang on. Boredom Killer Loading...</h2>
         <p id="summary"></p>
         <a id="readMore" href="" target="_blank" style="display:none;">Read More</a>
-        <a id="watchTopic" href="" target="_blank" style="display:none;">Watch the Topic</a>
-      <button id="getNewTopicButton" onclick="getNewTopic()">Get New Topic</button>
-
+        <a id="watchTopic" href="" target="_blank" style="display:none;">Watch video about it</a>
+        <button id="getNewTopicButton" onclick="getNewTopic()">Get a New Topic</button>
     </div>
 
-  <script>
-    function getNewTopic() {
-        document.getElementById('getNewTopicButton').style.display = 'none';
-        document.getElementById('readMore').style.display = 'none';
-        document.getElementById('watchTopic').style.display = 'none';
+    <script>
+        function getNewTopic() {
+            document.getElementById('getNewTopicButton').style.display = 'none';
+            document.getElementById('readMore').style.display = 'none';
+            document.getElementById('watchTopic').style.display = 'none';
 
-        document.getElementById('topic').textContent = 'Hang on. Boredom Killer Loading…';
-        document.getElementById('summary').textContent = ''; 
+            document.getElementById('topic').textContent = 'Hang on. Boredom Killer Loading…';
+            document.getElementById('summary').textContent = ''; 
 
-        fetch('/get_topic')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('topic').textContent = data.topic;
-                document.getElementById('summary').textContent = data.summary;
+            fetch('/get_topic')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('topic').textContent = data.topic;
+                    document.getElementById('summary').textContent = data.summary;
 
-                
-                if(data.url) {
-                    const readMoreLink = document.getElementById('readMore');
-                    readMoreLink.href = data.url;
-                    readMoreLink.style.display = 'inline-block';
-                }
-                if(data.video_url) {
-                    const watchTopicLink = document.getElementById('watchTopic');
-                    watchTopicLink.href = data.video_url;
-                    watchTopicLink.style.display = 'inline-block';
-                }
+                    if(data.url) {
+                        const readMoreLink = document.getElementById('readMore');
+                        readMoreLink.href = data.url;
+                        readMoreLink.style.display = 'inline-block';
+                    }
+                    if(data.video_url) {
+                        const watchTopicLink = document.getElementById('watchTopic');
+                        watchTopicLink.href = data.video_url;
+                        watchTopicLink.style.display = 'inline-block';
+                    }
 
-                document.getElementById('getNewTopicButton').style.display = 'inline-block';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('getNewTopicButton').style.display = 'inline-block';
-            });
-    }
+                    document.getElementById('getNewTopicButton').style.display = 'inline-block';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('getNewTopicButton').style.display = 'inline-block';
+                });
+        }
 
-    window.onload = getNewTopic; 
-
-
-  </script>
-
+        window.onload = getNewTopic;
+    </script>
 </body>
 </html>
