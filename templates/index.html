@@ -10,6 +10,7 @@
         <h2 id="topic">Hang on. Boredom Killer Loading...</h2>
         <p id="summary"></p>
         <a id="readMore" href="" target="_blank" style="display:none;">Read More</a>
+        <a id="watchTopic" href="" target="_blank" style="display:none;">Watch the Topic</a>
         <button onclick="getNewTopic()">Get New Topic</button>
     </div>
 
@@ -28,11 +29,19 @@
                     } else {
                         document.getElementById('readMore').style.display = 'none';
                     }
+                    if(data.video_url) {
+                        const watchTopicLink = document.getElementById('watchTopic');
+                        watchTopicLink.href = data.video_url;
+                        watchTopicLink.style.display = 'block';
+                        watchTopicLink.textContent = 'Watch the Topic';
+                    } else {
+                        document.getElementById('watchTopic').style.display = 'none';
+                    }
                 })
                 .catch(error => console.error('Error:', error));
         }
 
-        getNewTopic();  // Load a topic when the page loads
+        getNewTopic();  
     </script>
 </body>
 </html>

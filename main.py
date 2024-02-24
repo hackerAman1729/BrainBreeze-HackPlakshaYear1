@@ -13,7 +13,7 @@ def generate_random_topic():
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a knowledgeable assistant."},
-            {"role": "user", "content": "Suggest a random interesting topic. random topic like from rocket propulsion, to nylon thread, to history topic, to some historic sport event, to lithium mining to essential proteins etc etc. The topics should not be limited to that as I just mentioned them as an example like how niche the topics can be. Just give the topic and say nothing else."}
+            {"role": "user", "content": "Suggest a random interesting topic. random topic like from rocket propulsion, to nylon thread, to history topic, to some historic sport event, to lithium mining to essential proteins etc etc. The topics should not be limited to that as I just mentioned them as an example like how niche the topics can be. The most likely topics are already done so go niche. Just give the topic and say nothing else. "}
         ]
     )
     topic = response.choices[0].message.content.strip()
@@ -33,6 +33,24 @@ def get_resources(topic):
       return "An error occurred while fetching resources.", ""
 
 
+def get_video_resource(topic):
+  try:
+    results = exa_client.search(
+      topic,
+      num_results=1,
+      include_domains=["youtube.com"],
+      use_autoprompt=True,
+    )
+
+    # print(results)
+    if results.results and len(results.results) > 0:
+          video_url = results.results[0].url  
+          return video_url
+    else:
+          return ""
+  except Exception as e:
+      print(f"Error fetching video resources from Exa: {e}")
+      return ""
 
 
 
@@ -56,11 +74,12 @@ def home():
 def get_topic():
     topic = generate_random_topic()
     content, url = get_resources(topic)
+    video_url = get_video_resource(topic)
     if content:
         summary = summarize_content(content)
     else:
         summary = "Could not find sufficient resources for the generated topic."
-    return jsonify({'topic': topic, 'summary': summary, 'url': url})
+    return jsonify({'topic': topic, 'summary': summary, 'url': url, 'video_url': video_url})
 
 
 if __name__ == '__main__':
