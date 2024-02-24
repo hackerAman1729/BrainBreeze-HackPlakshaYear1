@@ -9,6 +9,8 @@
     <div id="content">
         <h2 id="topic">Topic will appear here</h2>
         <p id="summary">Summary will appear here</p>
+        <!-- Button to read more about the topic -->
+        <a id="readMore" href="" target="_blank" style="display:none;">Read More</a>
         <button onclick="getNewTopic()">Get New Topic</button>
     </div>
 
@@ -19,6 +21,14 @@
                 .then(data => {
                     document.getElementById('topic').textContent = data.topic;
                     document.getElementById('summary').textContent = data.summary;
+                    if(data.url) {
+                        const readMoreLink = document.getElementById('readMore');
+                        readMoreLink.href = data.url;
+                        readMoreLink.style.display = 'block';
+                        readMoreLink.textContent = 'Read More';
+                    } else {
+                        document.getElementById('readMore').style.display = 'none';
+                    }
                 })
                 .catch(error => console.error('Error:', error));
         }
