@@ -5,8 +5,8 @@ from exa_py import Exa
 
 app = Flask(__name__)
 
-client = "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"
-exa_client = "6f269778-7ce2-415b-8d43-6a930ffb0952"
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+exa_client = Exa(api_key=os.getenv('EXA_API_KEY'))
 
 
 def generate_random_topic():
@@ -101,4 +101,4 @@ def get_topic():
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=80, debug=True)
+  app.run(debug=True)
