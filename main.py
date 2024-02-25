@@ -97,13 +97,13 @@ def get_topic_image(topic):
       print(f"Error fetching image for topic: {e}")
       return ""
 
-@app.route('/get_image', methods=['GET'])
-def get_image():
-    topic = request.args.get('topic')
-    if not topic:
-        return jsonify({'error': 'Missing topic parameter'}), 400
-    image_url = get_topic_image(topic)
-    return jsonify({'image_url': image_url})
+# @app.route('/get_image', methods=['GET'])
+# def get_image():
+#     topic = request.args.get('topic')
+#     if not topic:
+#         return jsonify({'error': 'Missing topic parameter'}), 400
+#     image_url = get_topic_image(topic)
+#     return jsonify({'image_url': image_url})
 
 
 
