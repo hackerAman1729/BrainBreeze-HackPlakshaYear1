@@ -82,6 +82,30 @@ def summarize_content(content):
 def home():
   return render_template('index.html')
 
+def get_topic_image(topic):
+  try:
+      response = client.images.generate(
+          model="dall-e-2",
+          prompt=topic,
+          n=1,
+          size="1024x1024"  
+      )
+      image_url = response.data[0].url
+
+      return image_url
+  except Exception as e:
+      print(f"Error fetching image for topic: {e}")
+      return ""
+
+@app.route('/get_image', methods=['GET'])
+def get_image():
+    topic = request.args.get('topic')
+    if not topic:
+        return jsonify({'error': 'Missing topic parameter'}), 400
+    image_url = get_topic_image(topic)
+    return jsonify({'image_url': image_url})
+
+
 
 @app.route('/get_topic', methods=['GET'])
 def get_topic():
@@ -97,6 +121,7 @@ def get_topic():
       'summary': summary,
       'url': url,
       'video_url': video_url
+    
   })
 
 
