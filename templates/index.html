@@ -87,7 +87,10 @@
         <p id="summary"></p>
         <a id="readMore" href="" target="_blank" style="display:none;">Read More</a>
         <a id="watchTopic" href="" target="_blank" style="display:none;">Watch video about it</a>
+      <audio id="summaryAudio" src="" controls style="display:none;"></audio>
         <button id="getNewTopicButton" onclick="getNewTopic()">Get a New Topic</button>
+      
+
     </div>
     <div class="loader"></div>
 
@@ -102,6 +105,9 @@
           // Reset content
           document.getElementById('topic').textContent = 'Hang on. Boredom Killer Loading…';
           document.getElementById('summary').textContent = ''; 
+          const summaryAudio = document.getElementById('summaryAudio');
+          summaryAudio.src = '';
+          summaryAudio.style.display = 'none';
 
           // Fetch new topic
           fetch('/get_topic')
@@ -111,7 +117,7 @@
                   document.getElementById('topic').textContent = data.topic;
                   document.getElementById('summary').textContent = data.summary;
 
-                  // Show links if available
+                  // Show links 
                   if(data.url) {
                       const readMoreLink = document.getElementById('readMore');
                       readMoreLink.href = data.url;
@@ -123,9 +129,14 @@
                       watchTopicLink.style.display = 'inline-block';
                   }
 
-                  // Asynchronously update background image
+                  // Async fetch and update background image
                   if(data.topic) {
                       updateBackgroundImage(data.topic);
+                  }
+
+                  // Async fetch and play audio summary
+                  if(data.summary) {
+                      updateAudioSummary(data.summary);
                   }
 
                   // Hide loader and show button
@@ -139,7 +150,6 @@
       }
 
       function updateBackgroundImage(topic) {
-          // Assuming you have an endpoint set up to fetch the image URL by topic
           fetch(`/get_image?topic=${encodeURIComponent(topic)}`)
               .then(response => response.json())
               .then(data => {
@@ -152,8 +162,23 @@
               .catch(error => console.error('Failed to fetch image:', error));
       }
 
+      function updateAudioSummary(summary) {
+          fetch(`/get_summary_audio?summary=${encodeURIComponent(summary)}`)
+              .then(response => response.json())
+              .then(audioData => {
+                  if(audioData.audio_url) {
+                      const summaryAudio = document.getElementById('summaryAudio');
+                      summaryAudio.src = audioData.audio_url;
+                      summaryAudio.style.display = 'block'; // Automatically shows controls
+                  }
+              })
+              .catch(error => console.error('Failed to fetch audio summary:', error));
+      }
+
       window.onload = getNewTopic;
   </script>
+
+
 
 </body>
 </html>
