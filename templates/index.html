@@ -169,7 +169,7 @@
                   if(audioData.audio_url) {
                       const summaryAudio = document.getElementById('summaryAudio');
                       summaryAudio.src = audioData.audio_url;
-                      summaryAudio.style.display = 'block'; // Automatically shows controls
+                      summaryAudio.style.display = 'block'; 
                   }
               })
               .catch(error => console.error('Failed to fetch audio summary:', error));
