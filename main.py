@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, send_file
 import os
 import warnings
+import requests
 from openai import OpenAI
 from exa_py import Exa
 
@@ -86,20 +87,40 @@ def summarize_content(content):
 def home():
   return render_template('index.html')
 
-def get_topic_image(topic):
-  try:
-      response = client.images.generate(
-          model="dall-e-2",
-          prompt=topic,
-          n=1,
-          size="1024x1024"  
-      )
-      image_url = response.data[0].url
+# ---  calling dalle for images ---
+# def get_topic_image(topic):
+#   try:
+#       response = client.images.generate(
+#           model="dall-e-2",
+#           prompt=topic,
+#           n=1,
+#           size="1024x1024"  
+#       )
+#       image_url = response.data[0].url
 
-      return image_url
-  except Exception as e:
-      print(f"Error fetching image for topic: {e}")
-      return ""
+#       return image_url
+#   except Exception as e:
+#       print(f"Error fetching image for topic: {e}")
+#       return ""
+
+
+#calling unspash for images
+def get_topic_image(topic):
+    access_key = os.getenv('UNSPLASH_ACCESS_KEY') 
+    url = f"https://api.unsplash.com/search/photos?page=1&query={topic}&client_id={access_key}"
+    try:
+        response = requests.get(url)
+        response.raise_for_status() 
+        data = response.json()
+        if data['results']:
+            image_url = data['results'][0]['urls']['regular'] 
+            return image_url
+        else:
+            return ""  
+    except Exception as e:
+        print(f"Error fetching image from Unsplash: {e}")
+        return ""
+
 
 @app.route('/get_image', methods=['GET'])
 def get_image():
